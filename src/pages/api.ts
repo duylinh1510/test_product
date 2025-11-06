@@ -1,12 +1,16 @@
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_BASE_URL as string | undefined;
-if(!API_URL) {
-  throw new Error('Missing VITE_API_BASE_URL. Cấu hình trong .env.[mode]');
+if(!API_URL){
+  // Không ném lỗi để UI vẫn render khi chỉ cần deploy giao diện
+  // Dùng baseURL rỗng (các request sẽ gọi đường dẫn tương đối và có thể 404)
+  // và in cảnh báo để dev biết cấu hình env còn thiếu
+  // eslint-disable-next-line no-console
+  console.warn('[API] Missing VITE_API_BASE_URL. UI sẽ chạy nhưng API có thể lỗi.');
 }
 // Tạo axios instance
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: API_URL || '',
   headers: {
     'Content-Type': 'application/json',
   },
