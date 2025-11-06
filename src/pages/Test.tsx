@@ -31,9 +31,10 @@ const Test = () => {
     setName(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form data:', formData);
+    const data = new FormData(e.currentTarget);
+    console.log('Form data:', Object.fromEntries(data as any));
   };
 
   const handleClickForm = () => {
@@ -194,7 +195,7 @@ const Test = () => {
             //   e.currentTarget.style.transform = 'translateY(0)';
             //   e.currentTarget.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
             // }}
-            onClick={handleClickForm()}
+            onClick={handleClickForm}
           >
             Register Now
           </button>
